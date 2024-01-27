@@ -23,6 +23,7 @@ class Brick extends RectangleComponent with CollisionCallbacks, HasGameReference
   void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     removeFromParent();
+    game.score.value++;
 
     // The key point to understand is that component removal is a queued command.
     // It removes the brick after this code runs, but before the next tick of the game world.
