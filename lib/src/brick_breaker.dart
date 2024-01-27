@@ -25,7 +25,7 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, KeyboardEvents 
   final rand = math.Random();
 
   @override
-  FutureOr<void> onLoad() {
+  FutureOr<void> onLoad() async {
     super.onLoad();
     camera.viewfinder.anchor = Anchor.topLeft;
 
@@ -37,6 +37,7 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, KeyboardEvents 
           ..scale(height / 4),
         position: size / 2,
         radius: ballRadius,
+        difficultyModifier: difficultyModifier,
       ),
     );
 
@@ -46,6 +47,19 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, KeyboardEvents 
         position: Vector2(width / 2, height * 0.95),
         size: Vector2(batWidth, batHeight),
       ),
+    );
+
+    await world.addAll(
+      [
+        for (int i = 0; i < brickColors.length; i++)
+          for (int j = 1; j < 5; j++)
+            Brick(
+                Vector2(
+                  (i + 0.5) * brickWidth + (i + 1) * brickGutter,
+                  (j + 2.0) * brickHeight + j + brickGutter,
+                ),
+                brickColors[i])
+      ],
     );
 
     debugMode = true;
