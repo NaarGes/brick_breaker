@@ -27,6 +27,7 @@ class Brick extends RectangleComponent with CollisionCallbacks, HasGameReference
     // The key point to understand is that component removal is a queued command.
     // It removes the brick after this code runs, but before the next tick of the game world.
     if (game.world.children.query<Brick>().length == 1) {
+      game.playState = PlayState.won;
       game.world.removeAll(game.world.children.query<Ball>());
       game.world.removeAll(game.world.children.query<Bat>());
     }
